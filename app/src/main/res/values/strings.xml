@@ -1,4 +1,10 @@
 <resources>
     <string name="app_name">RNDM</string>
     <string name="action_settings">Settings</string>
+    <string name="username">username</string>
+    <string name="my_random_thought">my random thought…</string>
+    <string name="post">Post</string>
+    <string name="funny">funny</string>
+    <string name="serious">serious</string>
+    <string name="crazy">crazy</string>
 </resources>
