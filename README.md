@@ -1,4 +1,4 @@
-# Smack
+# RNDM
 
 Devslopes 2.0 Android Novice track
 
