@@ -10,21 +10,21 @@ import kotlinx.android.synthetic.main.activity_add_thought.*
 
 class AddThoughtActivity : AppCompatActivity() {
 
-    private var selectedCategory =  FUNNY
+    private var selectedCategory = FUNNY
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_thought)
     }
 
-    fun addFunnyClicked (view: View) {
+    fun addFunnyClicked(view: View) {
         addSeriousBtn.isChecked = false
         addCrazyBtn.isChecked = false
         addFunnyBtn.isChecked = true
         selectedCategory = FUNNY
     }
 
-    fun addSeriousClicked (view: View) {
+    fun addSeriousClicked(view: View) {
         addSeriousBtn.isChecked = true
         addCrazyBtn.isChecked = false
         addFunnyBtn.isChecked = false
@@ -32,14 +32,14 @@ class AddThoughtActivity : AppCompatActivity() {
 
     }
 
-    fun addCrazyClicked (view: View) {
+    fun addCrazyClicked(view: View) {
         addSeriousBtn.isChecked = false
         addCrazyBtn.isChecked = true
         addFunnyBtn.isChecked = false
         selectedCategory = CRAZY
     }
 
-    fun addPostClicked (view: View) {
+    fun addPostClicked(view: View) {
         // Add post to Firestore!
 
         val data = HashMap<String, Any>()
@@ -55,7 +55,7 @@ class AddThoughtActivity : AppCompatActivity() {
                 .addOnSuccessListener {
                     finish()
                 }
-                .addOnFailureListener {exception ->
+                .addOnFailureListener { exception ->
                     Log.e("EXCEPTION: ", "Could not add post: $exception")
                 }
     }
