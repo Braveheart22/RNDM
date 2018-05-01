@@ -5,6 +5,7 @@ package com.johnstrack.rndm
 const val FUNNY = "funny"
 const val SERIOUS = "serious"
 const val CRAZY = "crazy"
+const val POPULAR = "popular"
 
 // Collection reference
 
