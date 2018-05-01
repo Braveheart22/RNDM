@@ -5,4 +5,4 @@ Devslopes 2.0 Android Novice track
 Firebase & Cloud Firestore
 
 
-<img src="img/SmackAndroid Mockup.png" alt="mockup">
+<img src="img/RNDM Mockup.png" alt="mockup">
