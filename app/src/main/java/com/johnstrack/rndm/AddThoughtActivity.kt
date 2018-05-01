@@ -10,7 +10,7 @@ import kotlinx.android.synthetic.main.activity_add_thought.*
 
 class AddThoughtActivity : AppCompatActivity() {
 
-    var selectedCategory =  FUNNY
+    private var selectedCategory =  FUNNY
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,12 +43,12 @@ class AddThoughtActivity : AppCompatActivity() {
         // Add post to Firestore!
 
         val data = HashMap<String, Any>()
-        data.put("category", selectedCategory)
-        data.put("numComments", 0)
-        data.put("numLikes", 0)
-        data.put("thoughtTxt", addThoughtTxt.text.toString())
-        data.put("timestamp", FieldValue.serverTimestamp())
-        data.put("userName", addUsernameTxt.text.toString())
+        data["category"] = selectedCategory
+        data["numComments"] = 0
+        data["numLikes"] = 0
+        data["thoughtTxt"] = addThoughtTxt.text.toString()
+        data["timestamp"] = FieldValue.serverTimestamp()
+        data["userName"] = addUsernameTxt.text.toString()
 
         FirebaseFirestore.getInstance().collection(THOUGHTS_REF)
                 .add(data)
