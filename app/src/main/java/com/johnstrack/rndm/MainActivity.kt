@@ -9,6 +9,7 @@ import android.view.View
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ListenerRegistration
 import com.google.firebase.firestore.Query
+import com.google.firebase.firestore.QuerySnapshot
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.content_main.*
 import java.util.*
@@ -54,22 +55,7 @@ class MainActivity : AppCompatActivity() {
                         }
 
                         if (snapshot != null) {
-
-                            thoughts.clear()
-
-                            for (document in snapshot?.documents!!) {
-                                val data = document.data
-                                val name = data!![USERNAME] as String
-                                val timestamp = data[TIMESTAMP] as Date
-                                val thoughtTxt = data[THOUGHT_TXT] as String
-                                val numLikes = data[NUM_LIKES] as Long
-                                val numComments = data[NUM_COMMENTS] as Long
-                                val documentId = document.id
-
-                                val newThought = Thought(name, timestamp, thoughtTxt, numLikes.toInt(), numComments.toInt(), documentId)
-                                thoughts.add(newThought)
-                            }
-                            thoughtsAdapter.notifyDataSetChanged()
+                            parseData(snapshot)
                         }
                     }
         } else {
@@ -83,25 +69,28 @@ class MainActivity : AppCompatActivity() {
                         }
 
                         if (snapshot != null) {
-
-                            thoughts.clear()
-
-                            for (document in snapshot?.documents!!) {
-                                val data = document.data
-                                val name = data!![USERNAME] as String
-                                val timestamp = data[TIMESTAMP] as Date
-                                val thoughtTxt = data[THOUGHT_TXT] as String
-                                val numLikes = data[NUM_LIKES] as Long
-                                val numComments = data[NUM_COMMENTS] as Long
-                                val documentId = document.id
-
-                                val newThought = Thought(name, timestamp, thoughtTxt, numLikes.toInt(), numComments.toInt(), documentId)
-                                thoughts.add(newThought)
-                            }
-                            thoughtsAdapter.notifyDataSetChanged()
+                            parseData(snapshot)
                         }
                     }
         }
+    }
+
+    fun parseData (snapshot: QuerySnapshot) {
+        thoughts.clear()
+
+        for (document in snapshot?.documents!!) {
+            val data = document.data
+            val name = data!![USERNAME] as String
+            val timestamp = data[TIMESTAMP] as Date
+            val thoughtTxt = data[THOUGHT_TXT] as String
+            val numLikes = data[NUM_LIKES] as Long
+            val numComments = data[NUM_COMMENTS] as Long
+            val documentId = document.id
+
+            val newThought = Thought(name, timestamp, thoughtTxt, numLikes.toInt(), numComments.toInt(), documentId)
+            thoughts.add(newThought)
+        }
+        thoughtsAdapter.notifyDataSetChanged()
     }
 
     fun mainFunnyClicked(view: View) {
