@@ -11,7 +11,7 @@ class CreateUserActivity : AppCompatActivity() {
         setContentView(R.layout.activity_create_user)
     }
 
-    fun createCreatedClicked (view: View) {
+    fun createCreateClicked (view: View) {
 
     }
 

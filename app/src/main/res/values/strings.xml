@@ -8,4 +8,10 @@
     <string name="serious">serious</string>
     <string name="crazy">crazy</string>
     <string name="popular">popular</string>
+    <string name="email">email</string>
+    <string name="password">password</string>
+    <string name="don_t_have_an_account">Don\'t have an account?</string>
+    <string name="login">Login</string>
+    <string name="create_user">Create User</string>
+    <string name="cancel">Cancel</string>
 </resources>
