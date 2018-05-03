@@ -1,7 +1,8 @@
 package com.johnstrack.rndm
 
-import android.support.v7.app.AppCompatActivity
+import android.content.Intent
 import android.os.Bundle
+import android.support.v7.app.AppCompatActivity
 import android.view.View
 
 class LoginActivity : AppCompatActivity() {
@@ -16,6 +17,7 @@ class LoginActivity : AppCompatActivity() {
     }
 
     fun loginCreateClicked (view: View) {
-
+        val createUserIntent = Intent (this, CreateUserActivity::class.java)
+        startActivity(createUserIntent)
     }
 }

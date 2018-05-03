@@ -36,6 +36,9 @@ class MainActivity : AppCompatActivity() {
         thoughtListView.adapter = thoughtsAdapter
         val layoutManager = LinearLayoutManager(this)
         thoughtListView.layoutManager = layoutManager
+
+        val loginIntent = Intent(this, LoginActivity::class.java)
+        startActivity(loginIntent)
     }
 
     override fun onResume() {
@@ -78,7 +81,7 @@ class MainActivity : AppCompatActivity() {
     fun parseData (snapshot: QuerySnapshot) {
         thoughts.clear()
 
-        for (document in snapshot?.documents!!) {
+        for (document in snapshot.documents) {
             val data = document.data
             val name = data!![USERNAME] as String
             val timestamp = data[TIMESTAMP] as Date
