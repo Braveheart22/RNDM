@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.view.View
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 import com.johnstrack.rndm.R
@@ -50,7 +51,7 @@ class AddThoughtActivity : AppCompatActivity() {
         data[NUM_LIKES] = 0
         data[THOUGHT_TXT] = addThoughtTxt.text.toString()
         data[TIMESTAMP] = FieldValue.serverTimestamp()
-        data[USERNAME] = addUsernameTxt.text.toString()
+        data[USERNAME] = FirebaseAuth.getInstance().currentUser?.displayName.toString()
 
         FirebaseFirestore.getInstance().collection(THOUGHTS_REF)
                 .add(data)

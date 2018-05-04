@@ -38,12 +38,14 @@ class ThoughtsAdapter(val thoughts: ArrayList<Thought>, val itemClick: (Thought)
         private val thoughtTxt = itemView?.findViewById<TextView>(R.id.listViewThoughtTxt)
         private val numLikes = itemView?.findViewById<TextView>(R.id.listViewNumLikesLbl)
         private val likesImage = itemView?.findViewById<ImageView>(R.id.listViewLikesImage)
+        private val numComments = itemView?.findViewById<TextView>(R.id.listViewNumCommentsLbl)
 
         fun bindThought (thought: Thought) {
 
             userName?.text = thought.userName
             thoughtTxt?.text = thought.thoughtTxt
             numLikes?.text = thought.numLikes.toString()
+            numComments?.text = thought.numComments.toString()
 
             val dateFormatter = SimpleDateFormat("MMM d, h:mm a", Locale.getDefault())
             val dateString = dateFormatter.format(thought.timestamp)
