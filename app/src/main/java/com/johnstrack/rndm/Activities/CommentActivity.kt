@@ -17,7 +17,7 @@ import kotlinx.android.synthetic.main.activity_comment.*
 class CommentActivity : AppCompatActivity() {
     lateinit var thoughtDocumentId: String
     lateinit var commentsAdapter: CommentsAdapter
-    val comments = arrayListOf<Comment>()
+    private val comments = arrayListOf<Comment>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
