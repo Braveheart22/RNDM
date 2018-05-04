@@ -17,10 +17,10 @@ import java.util.*
 /**
  * Created by John on 5/1/2018 at 3:33 PM.
  */
-class ThoughtsAdapter(val thoughts: ArrayList<Thought>): RecyclerView.Adapter<ThoughtsAdapter.ViewHolder>() {
+class ThoughtsAdapter(val thoughts: ArrayList<Thought>, val itemClick: (Thought) -> Unit): RecyclerView.Adapter<ThoughtsAdapter.ViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.thought_list_view, parent, false)
-        return ViewHolder(view)
+        return ViewHolder(view, itemClick   )
     }
 
     override fun getItemCount(): Int {
@@ -31,13 +31,13 @@ class ThoughtsAdapter(val thoughts: ArrayList<Thought>): RecyclerView.Adapter<Th
         holder.bindThought(thoughts[position])
     }
 
-    inner class ViewHolder(itemView: View?) : RecyclerView.ViewHolder(itemView) {
+    inner class ViewHolder(itemView: View?, val itemClick: (Thought) -> Unit) : RecyclerView.ViewHolder(itemView) {
 
-        val userName = itemView?.findViewById<TextView>(R.id.listViewUsername)
-        val timestamp = itemView?.findViewById<TextView>(R.id.listViewTimestamp)
-        val thoughtTxt = itemView?.findViewById<TextView>(R.id.listViewThoughtTxt)
-        val numLikes = itemView?.findViewById<TextView>(R.id.listViewNumLikesLbl)
-        val likesImage = itemView?.findViewById<ImageView>(R.id.listViewLikesImage)
+        private val userName = itemView?.findViewById<TextView>(R.id.listViewUsername)
+        private val timestamp = itemView?.findViewById<TextView>(R.id.listViewTimestamp)
+        private val thoughtTxt = itemView?.findViewById<TextView>(R.id.listViewThoughtTxt)
+        private val numLikes = itemView?.findViewById<TextView>(R.id.listViewNumLikesLbl)
+        private val likesImage = itemView?.findViewById<ImageView>(R.id.listViewLikesImage)
 
         fun bindThought (thought: Thought) {
 
@@ -48,6 +48,7 @@ class ThoughtsAdapter(val thoughts: ArrayList<Thought>): RecyclerView.Adapter<Th
             val dateFormatter = SimpleDateFormat("MMM d, h:mm a", Locale.getDefault())
             val dateString = dateFormatter.format(thought.timestamp)
             timestamp?.text = dateString
+            itemView.setOnClickListener { itemClick(thought) }
 
             likesImage?.setOnClickListener {
                 FirebaseFirestore.getInstance().collection(THOUGHTS_REF).document(thought.documentId)

@@ -21,3 +21,6 @@ const val THOUGHT_TXT = "thoughtTxt"
 const val TIMESTAMP = "timestamp"
 const val USERNAME = "username"
 const val DATE_CREATED = "dateCreated"
+
+// Other constants
+const val DOCUMENT_KEY = "docId"

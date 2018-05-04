@@ -13,9 +13,9 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ListenerRegistration
 import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.QuerySnapshot
-import com.johnstrack.rndm.*
 import com.johnstrack.rndm.Adapters.ThoughtsAdapter
 import com.johnstrack.rndm.Model.Thought
+import com.johnstrack.rndm.R
 import com.johnstrack.rndm.Utilities.*
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.content_main.*
@@ -40,7 +40,12 @@ class MainActivity : AppCompatActivity() {
             startActivity(addThoughtIntent)
         }
 
-        thoughtsAdapter = ThoughtsAdapter(thoughts)
+        thoughtsAdapter = ThoughtsAdapter(thoughts) {thought ->
+            val commentActivity = Intent (this, CommentActivity::class.java)
+            commentActivity.putExtra(DOCUMENT_KEY, thought.documentId)
+            startActivity(commentActivity)
+
+        }
         thoughtListView.adapter = thoughtsAdapter
         val layoutManager = LinearLayoutManager(this)
         thoughtListView.layoutManager = layoutManager
