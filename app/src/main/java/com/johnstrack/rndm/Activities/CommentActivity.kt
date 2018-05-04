@@ -2,11 +2,13 @@ package com.johnstrack.rndm.Activities
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import android.support.v7.widget.LinearLayoutManager
 import android.util.Log
 import android.view.View
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
+import com.johnstrack.rndm.Adapters.CommentsAdapter
 import com.johnstrack.rndm.Model.Comment
 import com.johnstrack.rndm.R
 import com.johnstrack.rndm.Utilities.*
@@ -14,12 +16,18 @@ import kotlinx.android.synthetic.main.activity_comment.*
 
 class CommentActivity : AppCompatActivity() {
     lateinit var thoughtDocumentId: String
+    lateinit var commentsAdapter: CommentsAdapter
     val comments = arrayListOf<Comment>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_comment)
         thoughtDocumentId = intent.getStringExtra(DOCUMENT_KEY)
+
+        commentsAdapter = CommentsAdapter(comments)
+        commentListView.adapter = commentsAdapter
+        val layoutManager = LinearLayoutManager(this)
+        commentListView.layoutManager = layoutManager
     }
 
     fun addCommentClicked (view: View) {
