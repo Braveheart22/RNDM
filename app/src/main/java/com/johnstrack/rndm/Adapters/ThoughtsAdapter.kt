@@ -1,4 +1,4 @@
-package com.johnstrack.rndm
+package com.johnstrack.rndm.Adapters
 
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
@@ -7,6 +7,10 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import com.google.firebase.firestore.FirebaseFirestore
+import com.johnstrack.rndm.Model.Thought
+import com.johnstrack.rndm.R
+import com.johnstrack.rndm.Utilities.NUM_LIKES
+import com.johnstrack.rndm.Utilities.THOUGHTS_REF
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -15,7 +19,7 @@ import java.util.*
  */
 class ThoughtsAdapter(val thoughts: ArrayList<Thought>): RecyclerView.Adapter<ThoughtsAdapter.ViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view = LayoutInflater.from(parent?.context).inflate(R.layout.thought_list_view, parent, false)
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.thought_list_view, parent, false)
         return ViewHolder(view)
     }
 
@@ -24,7 +28,7 @@ class ThoughtsAdapter(val thoughts: ArrayList<Thought>): RecyclerView.Adapter<Th
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder?.bindThought(thoughts[position])
+        holder.bindThought(thoughts[position])
     }
 
     inner class ViewHolder(itemView: View?) : RecyclerView.ViewHolder(itemView) {

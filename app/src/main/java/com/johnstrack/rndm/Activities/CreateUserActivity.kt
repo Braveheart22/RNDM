@@ -1,4 +1,4 @@
-package com.johnstrack.rndm
+package com.johnstrack.rndm.Activities
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
@@ -8,6 +8,10 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.UserProfileChangeRequest
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
+import com.johnstrack.rndm.Utilities.DATE_CREATED
+import com.johnstrack.rndm.R
+import com.johnstrack.rndm.Utilities.USERNAME
+import com.johnstrack.rndm.Utilities.USERS_REF
 import kotlinx.android.synthetic.main.activity_create_user.*
 
 class CreateUserActivity : AppCompatActivity() {

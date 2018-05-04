@@ -1,4 +1,4 @@
-package com.johnstrack.rndm
+package com.johnstrack.rndm.Model
 
 import java.util.*
 

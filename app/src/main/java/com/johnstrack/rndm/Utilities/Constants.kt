@@ -1,4 +1,4 @@
-package com.johnstrack.rndm
+package com.johnstrack.rndm.Utilities
 
 // Category constants
 

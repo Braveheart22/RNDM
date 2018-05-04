@@ -1,4 +1,4 @@
-package com.johnstrack.rndm
+package com.johnstrack.rndm.Activities
 
 import android.content.Intent
 import android.os.Bundle
@@ -13,6 +13,10 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ListenerRegistration
 import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.QuerySnapshot
+import com.johnstrack.rndm.*
+import com.johnstrack.rndm.Adapters.ThoughtsAdapter
+import com.johnstrack.rndm.Model.Thought
+import com.johnstrack.rndm.Utilities.*
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.content_main.*
 import java.util.*
