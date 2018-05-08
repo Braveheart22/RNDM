@@ -16,4 +16,7 @@
     <string name="cancel">Cancel</string>
     <string name="add_comment">add comment…</string>
     <string name="send_button">send button</string>
+    <string name="options">options</string>
+    <string name="favorite">Favorite</string>
+    <string name="comment_count">comment count</string>
 </resources>

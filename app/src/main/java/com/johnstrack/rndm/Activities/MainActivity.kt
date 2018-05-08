@@ -72,7 +72,7 @@ class MainActivity : AppCompatActivity() {
         return super.onPrepareOptionsMenu(menu)
     }
 
-    fun updateUI () {
+    private fun updateUI () {
         if (auth.currentUser == null) {
             mainCrazyBtn.isEnabled = false
             mainFunnyBtn.isEnabled = false
@@ -137,7 +137,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    fun parseData (snapshot: QuerySnapshot) {
+    private fun parseData (snapshot: QuerySnapshot) {
         thoughts.clear()
 
         for (document in snapshot.documents) {
@@ -148,8 +148,9 @@ class MainActivity : AppCompatActivity() {
             val numLikes = data[NUM_LIKES] as Long
             val numComments = data[NUM_COMMENTS] as Long
             val documentId = document.id
+            val userId = data[USER_ID] as String
 
-            val newThought = Thought(name, timestamp, thoughtTxt, numLikes.toInt(), numComments.toInt(), documentId)
+            val newThought = Thought(name, timestamp, thoughtTxt, numLikes.toInt(), numComments.toInt(), documentId, userId)
             thoughts.add(newThought)
         }
         thoughtsAdapter.notifyDataSetChanged()
