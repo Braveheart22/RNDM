@@ -14,6 +14,7 @@ import com.google.firebase.firestore.ListenerRegistration
 import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.QuerySnapshot
 import com.johnstrack.rndm.Adapters.ThoughtsAdapter
+import com.johnstrack.rndm.Interfaces.ThoughtOptionsClickListener
 import com.johnstrack.rndm.Model.Thought
 import com.johnstrack.rndm.R
 import com.johnstrack.rndm.Utilities.*
@@ -21,7 +22,11 @@ import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.content_main.*
 import java.util.*
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), ThoughtOptionsClickListener {
+
+    override fun thoughtOptionsMenuClicked(thought: Thought) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
 
     private var selectedCategory = FUNNY
     private lateinit var thoughtsAdapter: ThoughtsAdapter
@@ -40,7 +45,7 @@ class MainActivity : AppCompatActivity() {
             startActivity(addThoughtIntent)
         }
 
-        thoughtsAdapter = ThoughtsAdapter(thoughts) {thought ->
+        thoughtsAdapter = ThoughtsAdapter(thoughts, this) {thought ->
             val commentActivity = Intent (this, CommentActivity::class.java)
             commentActivity.putExtra(DOCUMENT_KEY, thought.documentId)
             startActivity(commentActivity)

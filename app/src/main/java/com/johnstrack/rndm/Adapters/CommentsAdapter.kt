@@ -4,7 +4,9 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
+import com.google.firebase.auth.FirebaseAuth
 import com.johnstrack.rndm.Model.Comment
 import com.johnstrack.rndm.R
 import java.text.SimpleDateFormat
@@ -32,16 +34,22 @@ class CommentsAdapter(private val comments: ArrayList<Comment>) : RecyclerView.A
         private val userName = itemView?.findViewById<TextView>(R.id.commentListUsername)
         private val timestamp = itemView?.findViewById<TextView>(R.id.commentListTimestamp)
         private val commentTxt = itemView?.findViewById<TextView>(R.id.commentListCommentTxt)
+        private val optionsImage = itemView?.findViewById<ImageView>(R.id.commentOptionsImage)
 
 
         fun bindComment(comment: Comment) {
 
+            optionsImage?.visibility = View.INVISIBLE
             userName?.text = comment.username
             commentTxt?.text = comment.commentTxt
 
             val dateFormatter = SimpleDateFormat("MMM d, h:mm a", Locale.getDefault())
             val dateString = dateFormatter.format(comment.timestamp)
             timestamp?.text = dateString
+
+            if (FirebaseAuth.getInstance().currentUser?.uid == comment.userId) {
+                optionsImage?.visibility = View.VISIBLE
+            }
         }
     }
 }
