@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import com.google.firebase.auth.FirebaseAuth
+import com.johnstrack.rndm.Interfaces.CommentOptionsClickListener
 import com.johnstrack.rndm.Model.Comment
 import com.johnstrack.rndm.R
 import java.text.SimpleDateFormat
@@ -15,7 +16,7 @@ import java.util.*
 /**
  * Created by John on 5/4/2018 at 4:04 PM.
  */
-class CommentsAdapter(private val comments: ArrayList<Comment>) : RecyclerView.Adapter<CommentsAdapter.ViewHolder>() {
+class CommentsAdapter(private val comments: ArrayList<Comment>, val commentOptionsListener: CommentOptionsClickListener) : RecyclerView.Adapter<CommentsAdapter.ViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.comment_list_view, parent, false)
         return ViewHolder(view)
@@ -49,6 +50,9 @@ class CommentsAdapter(private val comments: ArrayList<Comment>) : RecyclerView.A
 
             if (FirebaseAuth.getInstance().currentUser?.uid == comment.userId) {
                 optionsImage?.visibility = View.VISIBLE
+                optionsImage?.setOnClickListener {
+                    commentOptionsListener.optionsMenuClicked(comment)
+                }
             }
         }
     }

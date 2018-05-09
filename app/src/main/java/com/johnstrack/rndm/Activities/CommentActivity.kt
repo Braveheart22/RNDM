@@ -12,13 +12,15 @@ import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
 import com.johnstrack.rndm.Adapters.CommentsAdapter
+import com.johnstrack.rndm.Interfaces.CommentOptionsClickListener
 import com.johnstrack.rndm.Model.Comment
 import com.johnstrack.rndm.R
 import com.johnstrack.rndm.Utilities.*
 import kotlinx.android.synthetic.main.activity_comment.*
 import java.util.*
 
-class CommentActivity : AppCompatActivity() {
+class CommentActivity : AppCompatActivity(), CommentOptionsClickListener {
+
     lateinit var thoughtDocumentId: String
     lateinit var commentsAdapter: CommentsAdapter
     private val comments = arrayListOf<Comment>()
@@ -28,7 +30,7 @@ class CommentActivity : AppCompatActivity() {
         setContentView(R.layout.activity_comment)
         thoughtDocumentId = intent.getStringExtra(DOCUMENT_KEY)
 
-        commentsAdapter = CommentsAdapter(comments)
+        commentsAdapter = CommentsAdapter(comments, this)
         commentListView.adapter = commentsAdapter
         val layoutManager = LinearLayoutManager(this)
         commentListView.layoutManager = layoutManager
@@ -58,6 +60,10 @@ class CommentActivity : AppCompatActivity() {
                         commentsAdapter.notifyDataSetChanged()
                     }
                 }
+    }
+
+    override fun optionsMenuClicked(comment: Comment) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
     fun addCommentClicked(view: View) {
