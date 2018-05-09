@@ -24,10 +24,6 @@ import java.util.*
 
 class MainActivity : AppCompatActivity(), ThoughtOptionsClickListener {
 
-    override fun thoughtOptionsMenuClicked(thought: Thought) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
     private var selectedCategory = FUNNY
     private lateinit var thoughtsAdapter: ThoughtsAdapter
     private val thoughts = arrayListOf<Thought>()
@@ -75,6 +71,10 @@ class MainActivity : AppCompatActivity(), ThoughtOptionsClickListener {
             menuItem.title = "Logout"
         }
         return super.onPrepareOptionsMenu(menu)
+    }
+
+    override fun thoughtOptionsMenuClicked(thought: Thought) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
     private fun updateUI () {
