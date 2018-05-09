@@ -21,8 +21,8 @@ import java.util.*
 
 class CommentActivity : AppCompatActivity(), CommentOptionsClickListener {
 
-    lateinit var thoughtDocumentId: String
-    lateinit var commentsAdapter: CommentsAdapter
+    private lateinit var thoughtDocumentId: String
+    private lateinit var commentsAdapter: CommentsAdapter
     private val comments = arrayListOf<Comment>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -81,10 +81,10 @@ class CommentActivity : AppCompatActivity(), CommentOptionsClickListener {
                     .document(thoughtDocumentId).collection(COMMENTS_REF).document()
 
             val data = HashMap<String, Any>()
-            data.put(COMMENT_TXT, commentTxt)
-            data.put(TIMESTAMP, FieldValue.serverTimestamp())
-            data.put(USERNAME, FirebaseAuth.getInstance().currentUser?.displayName.toString())
-            data.put(USER_ID, FirebaseAuth.getInstance().currentUser?.uid.toString())
+            data[COMMENT_TXT] = commentTxt
+            data[TIMESTAMP] = FieldValue.serverTimestamp()
+            data[USERNAME] = FirebaseAuth.getInstance().currentUser?.displayName.toString()
+            data[USER_ID] = FirebaseAuth.getInstance().currentUser?.uid.toString()
 
             transaction.set(newCommentRef, data)
         }
