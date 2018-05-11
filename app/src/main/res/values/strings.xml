@@ -19,4 +19,6 @@
     <string name="options">options</string>
     <string name="favorite">Favorite</string>
     <string name="comment_count">comment count</string>
+    <string name="delete">Delete</string>
+    <string name="edit">Edit</string>
 </resources>

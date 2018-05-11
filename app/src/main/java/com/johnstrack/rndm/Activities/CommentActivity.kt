@@ -2,11 +2,13 @@ package com.johnstrack.rndm.Activities
 
 import android.content.Context
 import android.os.Bundle
+import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.util.Log
 import android.view.View
 import android.view.inputmethod.InputMethodManager
+import android.widget.Button
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
@@ -63,7 +65,37 @@ class CommentActivity : AppCompatActivity(), CommentOptionsClickListener {
     }
 
     override fun optionsMenuClicked(comment: Comment) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        val builder = AlertDialog.Builder(this)
+        val dialogView = layoutInflater.inflate(R.layout.options_menu, null)
+        val deleteBtn = dialogView.findViewById<Button>(R.id.optionDeleteBtn)
+        val editBtn = dialogView.findViewById<Button>(R.id.optionEditBtn)
+
+        builder.setView(dialogView)
+                .setNegativeButton("Cancel") { _, _ -> }
+        val ad = builder.show()
+
+        deleteBtn.setOnClickListener {
+            val commentRef = FirebaseFirestore.getInstance().collection(THOUGHTS_REF).document(thoughtDocumentId)
+                    .collection(COMMENTS_REF).document(comment.documentId)
+            val thoughtRef = FirebaseFirestore.getInstance().collection(THOUGHTS_REF).document(thoughtDocumentId)
+
+            FirebaseFirestore.getInstance().runTransaction { transaction ->
+
+                val thought = transaction.get(thoughtRef)
+                val numComments = thought.getLong(NUM_COMMENTS)!! - 1
+                transaction.update(thoughtRef, NUM_COMMENTS, numComments)
+
+                transaction.delete(commentRef)
+            }.addOnSuccessListener {
+                ad.dismiss()
+            }.addOnFailureListener {exception ->
+                Log.e("Exception", "Could not delete comment: ${exception.localizedMessage}")
+            }
+        }
+
+        editBtn.setOnClickListener {
+
+        }
     }
 
     fun addCommentClicked(view: View) {
