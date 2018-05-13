@@ -1,6 +1,7 @@
 package com.johnstrack.rndm.Activities
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
@@ -19,6 +20,7 @@ import com.johnstrack.rndm.Model.Comment
 import com.johnstrack.rndm.R
 import com.johnstrack.rndm.Utilities.*
 import kotlinx.android.synthetic.main.activity_comment.*
+import kotlinx.android.synthetic.main.activity_update_comment.*
 import java.util.*
 
 class CommentActivity : AppCompatActivity(), CommentOptionsClickListener {
@@ -94,7 +96,11 @@ class CommentActivity : AppCompatActivity(), CommentOptionsClickListener {
         }
 
         editBtn.setOnClickListener {
-
+            val updateIntent = Intent(this, UpdateCommentActivity::class.java)
+            updateIntent.putExtra(THOUGHT_DOC_ID_EXTRA, thoughtDocumentId)
+            updateIntent.putExtra(COMMENT_DOC_ID_EXTRA, comment.documentId)
+            updateIntent.putExtra(COMMENT_TXT_EXTRA, comment.commentTxt)
+            startActivity(updateIntent)
         }
     }
 
