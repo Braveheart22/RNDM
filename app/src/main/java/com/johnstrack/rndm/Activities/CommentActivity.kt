@@ -100,8 +100,8 @@ class CommentActivity : AppCompatActivity(), CommentOptionsClickListener {
             updateIntent.putExtra(THOUGHT_DOC_ID_EXTRA, thoughtDocumentId)
             updateIntent.putExtra(COMMENT_DOC_ID_EXTRA, comment.documentId)
             updateIntent.putExtra(COMMENT_TXT_EXTRA, comment.commentTxt)
+            ad.dismiss()
             startActivity(updateIntent)
-            //
         }
     }
 
