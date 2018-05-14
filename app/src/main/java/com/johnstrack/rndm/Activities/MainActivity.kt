@@ -2,12 +2,14 @@ package com.johnstrack.rndm.Activities
 
 import android.content.Intent
 import android.os.Bundle
+import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.widget.Button
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ListenerRegistration
@@ -74,7 +76,33 @@ class MainActivity : AppCompatActivity(), ThoughtOptionsClickListener {
     }
 
     override fun thoughtOptionsMenuClicked(thought: Thought) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        val builder = AlertDialog.Builder(this)
+        val dialogView = layoutInflater.inflate(R.layout.options_menu, null)
+        val deleteBtn = dialogView.findViewById<Button>(R.id.optionDeleteBtn)
+        val editBtn = dialogView.findViewById<Button>(R.id.optionEditBtn)
+
+        builder.setView(dialogView).setNegativeButton("Cancel") { _, _ -> }
+        val ad = builder.show()
+
+        deleteBtn.setOnClickListener {
+            val thoughtRef = FirebaseFirestore.getInstance().collection(THOUGHTS_REF).document(thought.documentId)
+            thoughtRef.delete()
+                    .addOnSuccessListener {
+                        ad.dismiss()
+                    }
+                    .addOnFailureListener {exception ->
+                        Log.e("Exception", "Could not delete thought: ${exception.localizedMessage}")
+                    }
+        }
+
+        editBtn.setOnClickListener {
+//            val updateIntent = Intent(this, UpdateCommentActivity::class.java)
+//            updateIntent.putExtra(THOUGHT_DOC_ID_EXTRA, thoughtDocumentId)
+//            updateIntent.putExtra(COMMENT_DOC_ID_EXTRA, comment.documentId)
+//            updateIntent.putExtra(COMMENT_TXT_EXTRA, comment.commentTxt)
+//            ad.dismiss()
+//            startActivity(updateIntent)
+        }
     }
 
     private fun updateUI () {
