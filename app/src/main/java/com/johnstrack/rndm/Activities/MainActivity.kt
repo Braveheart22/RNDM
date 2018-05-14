@@ -11,10 +11,7 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.Button
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.ListenerRegistration
-import com.google.firebase.firestore.Query
-import com.google.firebase.firestore.QuerySnapshot
+import com.google.firebase.firestore.*
 import com.johnstrack.rndm.Adapters.ThoughtsAdapter
 import com.johnstrack.rndm.Interfaces.ThoughtOptionsClickListener
 import com.johnstrack.rndm.Model.Thought
@@ -23,6 +20,7 @@ import com.johnstrack.rndm.Utilities.*
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.content_main.*
 import java.util.*
+import kotlin.concurrent.thread
 
 class MainActivity : AppCompatActivity(), ThoughtOptionsClickListener {
 
@@ -86,13 +84,18 @@ class MainActivity : AppCompatActivity(), ThoughtOptionsClickListener {
 
         deleteBtn.setOnClickListener {
             val thoughtRef = FirebaseFirestore.getInstance().collection(THOUGHTS_REF).document(thought.documentId)
-            thoughtRef.delete()
-                    .addOnSuccessListener {
-                        ad.dismiss()
-                    }
-                    .addOnFailureListener {exception ->
-                        Log.e("Exception", "Could not delete thought: ${exception.localizedMessage}")
-                    }
+            val collectionRef = FirebaseFirestore.getInstance().collection(THOUGHTS_REF).document(thought.documentId).collection(COMMENTS_REF)
+            deleteCollection(collectionRef, thought) {success ->
+                if (success) {
+                    thoughtRef.delete()
+                            .addOnSuccessListener {
+                                ad.dismiss()
+                            }
+                            .addOnFailureListener {exception ->
+                                Log.e("Exception", "Could not delete thought: ${exception.localizedMessage}")
+                            }
+                }
+            }
         }
 
         editBtn.setOnClickListener {
@@ -103,6 +106,29 @@ class MainActivity : AppCompatActivity(), ThoughtOptionsClickListener {
 //            ad.dismiss()
 //            startActivity(updateIntent)
         }
+    }
+
+    fun deleteCollection (collection: CollectionReference, thought: Thought, complete: (Boolean) -> Unit) {
+        collection.get().addOnSuccessListener { snapshot ->
+            thread {
+                val batch = FirebaseFirestore.getInstance().batch()
+                for (document in snapshot) {
+                    val docRef = FirebaseFirestore.getInstance().collection(THOUGHTS_REF).document(thought.documentId)
+                            .collection(COMMENTS_REF).document(document.id)
+                    batch.delete(docRef)
+                }
+                batch.commit()
+                        .addOnSuccessListener {
+                            complete(true)
+                        }
+                        .addOnFailureListener { exception ->
+                            Log.e("Exception", "Could not delete subcollection: ${exception.localizedMessage}")
+                        }
+            }
+        }
+                .addOnFailureListener { exception ->
+                    Log.e("Exception", "Could not do retrieve documents: ${exception.localizedMessage}")
+                }
     }
 
     private fun updateUI () {
